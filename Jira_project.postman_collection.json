@@ -1,0 +1,849 @@
+{
+	"info": {
+		"_postman_id": "2a898a7a-bdef-4144-9664-a1cd494070f6",
+		"name": "Jira_project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6189541"
+	},
+	"item": [
+		{
+			"name": "Create an Issue in Jira",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"resp = pm.response.json();\r",
+							"pm.environment.set(\"issue_ID\",resp.id );\r",
+							"pm.environment.set(\"KEYID\",resp.key );\r",
+							"pm.test(\"request is successful\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//pm.variables.replaceIn('{{$randomWord}}');\r",
+							"pm.environment.set(\"Summary\",\"Summary test c\"+ pm.variables.replaceIn('{{$randomWord}}'));\r",
+							"pm.environment.set(\"data_des\",\"Description about issue test c\" + pm.variables.replaceIn('{{$randomWord}}'))\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "yKRbhJaFOet11mJ6N4T3721B",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "ananthanta27@gmail.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fields\": {\r\n        \"project\": {\r\n            \"key\": \"TK\"\r\n        },\r\n        \"summary\": \"{{Summary}}\",\r\n        \"description\": \"{{data_des}}\",\r\n        \"issuetype\": {\r\n            \"name\": \"Bug\"\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{SIT_url}}/rest/api/2/issue/",
+					"protocol": "https",
+					"host": [
+						"{{SIT_url}}"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create an feature in Jira",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"request is successful\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"resp = pm.response.json();\r",
+							"pm.environment.set(\"issue_ID\",resp.id );\r",
+							"pm.environment.set(\"KEYID\",resp.key );"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//pm.variables.replaceIn('{{$randomWord}}');\r",
+							"pm.environment.set(\"Summary\",\"Summary test c\"+ pm.variables.replaceIn('{{$randomWord}}'));\r",
+							"pm.environment.set(\"data_des\",\"Description about issue test c\" + pm.variables.replaceIn('{{$randomWord}}'))\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "yKRbhJaFOet11mJ6N4T3721B",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "ananthanta27@gmail.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fields\": {\r\n        \"project\": {\r\n            \"key\": \"TK\"\r\n        },\r\n        \"summary\": \"{{Summary}}\",\r\n        \"description\": \"{{data_des}}\",\r\n        \"issuetype\": {\r\n            \"name\": \"New Feature\"\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{SIT_url}}/rest/api/2/issue/",
+					"protocol": "https",
+					"host": [
+						"{{SIT_url}}"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Based ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"request is successful\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(pm.environment.get(\"KEYID\"));\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "yKRbhJaFOet11mJ6N4T3721B",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "ananthanta27@gmail.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{SIT_url}}/rest/api/2/issue/{{issue_ID}}",
+					"protocol": "https",
+					"host": [
+						"{{SIT_url}}"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						"{{issue_ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search with  KEY ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"request is successful\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(pm.environment.get(\"issue_ID\"));\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "yKRbhJaFOet11mJ6N4T3721B",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "ananthanta27@gmail.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{SIT_url}}/rest/api/2/issue/{{KEYID}}",
+					"protocol": "https",
+					"host": [
+						"{{SIT_url}}"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						"{{KEYID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit  an Issue in Jira  with Issue ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"request is successful\", function () {\r",
+							"   pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"Updated_dis\",\"Description about issue test c \" + \"Updated test\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "yKRbhJaFOet11mJ6N4T3721B",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "ananthanta27@gmail.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fields\": {\r\n        \"description\": \"{{Updated_dis}}\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{SIT_url}}/rest/api/2/issue/{{issue_ID}}",
+					"protocol": "https",
+					"host": [
+						"{{SIT_url}}"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						"{{issue_ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit  an Issue in Jira  with KEYID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"request is successful\", function () {\r",
+							"   pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"Updated_dis\",\"Description about issue test c \" + \"Updated test\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "yKRbhJaFOet11mJ6N4T3721B",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "ananthanta27@gmail.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fields\": {\r\n        \"description\": \"{{Updated_dis}}\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{SIT_url}}/rest/api/2/issue/{{KEYID}}",
+					"protocol": "https",
+					"host": [
+						"{{SIT_url}}"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						"{{KEYID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete Issue in Jira  with issue id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"request is successful\", function () {\r",
+							"   pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "yKRbhJaFOet11mJ6N4T3721B",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "ananthanta27@gmail.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://{{SIT_url}}/rest/api/2/issue/{{issue_ID}}",
+					"protocol": "https",
+					"host": [
+						"{{SIT_url}}"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						"{{issue_ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "404 Returned if the issue is not found",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"request is successful\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "yKRbhJaFOet11mJ6N4T3721B",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "ananthanta27@gmail.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://{{SIT_url}}/rest/api/2/issue/{{KEYID}}",
+					"protocol": "https",
+					"host": [
+						"{{SIT_url}}"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						"{{KEYID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "400 Returned for delete if the issue has sub task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"request is successful\", function () {\r",
+							"   pm.response.to.have.status(400);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "yKRbhJaFOet11mJ6N4T3721B",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "ananthanta27@gmail.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://{{SIT_url}}/rest/api/2/issue/TK-1",
+					"protocol": "https",
+					"host": [
+						"{{SIT_url}}"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						"TK-1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search for all issues",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"request is successful\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "yKRbhJaFOet11mJ6N4T3721B",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "ananthanta27@gmail.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{SIT_url}}/rest/api/2/search?jql=Project={{projectName}}",
+					"protocol": "https",
+					"host": [
+						"{{SIT_url}}"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"search"
+					],
+					"query": [
+						{
+							"key": "jql",
+							"value": "Project={{projectName}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List all issue Types",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"request is successful\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"var jsonData=JSON.parse(responseBody);\r",
+							"pm.environment.set(\"ID\",jsonData[4].id);\r",
+							"pm.environment.set(\"description\",jsonData[4].description);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "yKRbhJaFOet11mJ6N4T3721B",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "ananthanta27@gmail.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{SIT_url}}/rest/api/2/issuetype",
+					"protocol": "https",
+					"host": [
+						"{{SIT_url}}"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issuetype"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List the specific issue type with the ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"request is successful\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(pm.environment.get(\"description\"));\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "yKRbhJaFOet11mJ6N4T3721B",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "ananthanta27@gmail.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{SIT_url}}/rest/api/2/issuetype/{{ID}}",
+					"protocol": "https",
+					"host": [
+						"{{SIT_url}}"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issuetype",
+						"{{ID}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "issueID",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
